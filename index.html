@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="initial-scale=1.0">
+        <meta charset="utf-8">
+        <title>Phoenix Arizona Districts - Find Your District</title>
+
+        <!-- Vendor Assets -->
+        <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+
+        <!-- App Assets -->
+        <link rel="stylesheet" href="/assets/css/phoenix-arizona-districts.css">
+    </head>
+    <body>
+
+        <div class="container container-stretch">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col col-xs-7 col-sm-5 col-md-4 map-sidebar">
+                    <h1 class="map-sidebar-hdg">Find Your Phoenix District</h1>
+                    <p>Enter your address to find which city council district you're in.</p>
+                    <hr/>
+                    <input id="address-input" type="text" class="form-control" placeholder="Search By Address">
+                    <div class="alert alert-warning alert-districtNotFound" role="alert">
+                        That address doesn't match a Phoenix district.
+                    </div>
+                </div>
+                <!-- Google Map -->
+                <div id="map" class="col colxs-5 col-sm-7 col-md-8"></div>
+            </div>
+        </div>
+        <script>
+            var districtColors = [
+                '#6f97c4','#be4b34','#6f4ac6','#6ab25d','#cd53bf',
+                '#c39b4b','#623b6f','#576338','#c2647f'
+            ];
+
+
+            function initMap() {
+                var infowindow = new google.maps.InfoWindow();
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    disableDefaultUI: true,
+                    center: {lat: 33.59148994725138, lng: -112.05343763476559},
+                    zoom: 10,
+                    styles: [
+                        {
+                          featureType: 'all',
+                          stylers: [
+                            { saturation: -80 }
+                          ]
+                        },{
+                          featureType: 'road.arterial',
+                          elementType: 'geometry',
+                          stylers: [
+                            { hue: '#00ffee' },
+                            { saturation: 50 }
+                          ]
+                        },{
+                          featureType: 'poi.business',
+                          elementType: 'labels',
+                          stylers: [
+                            { visibility: 'off' }
+                          ]
+                    }]
+                });
+
+                // load geojson
+                // Bypass easier google maps method, so we can separate
+                // feature collection into individual objects
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/assets/geometry/council-districts.json', true);
+                xhr.onload = function() {
+                    var featureCollectionJson = JSON.parse(this.responseText).features;
+                    featureCollectionJson.forEach(function(district) {
+                        map.data.addGeoJson(district);
+
+                        map.data.setStyle(function(feature) {
+                            return {
+                                fillColor: feature.getProperty('fill_color'),
+                                fillOpacity: 0.5,
+                                strokeColor: 'white',
+                                strokeOpacity: 0.9,
+                                strokeWeight: 2.5,
+                                zIndex: 11
+                        }});
+
+                    });
+                    map.data.forEach(function(feature) {
+                        createPolygonLabel(feature, map);
+
+                    });
+                    createSearchBox(map);
+                };
+                xhr.send();
+
+                // infowindow listener
+                // When the user clicks, open an infowindow
+                map.data.addListener('click', function(event) {
+                    $('.map-wrapper').toggleClass('map-wrapper_toggled')
+                    var popupHtml = event.feature.getProperty('representative');
+                    infowindow.setContent('<div style="width:150px; text-align: center;">' + popupHtml + '</div>');
+                    infowindow.setPosition(event.latLng);
+                    infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
+                    infowindow.open(map);
+                });
+
+            }
+
+            function checkPolygonIntersection(point, geometryPaths)
+            {
+                var polyX = new google.maps.Polygon({
+                    paths: geometryPaths
+                });
+                return google.maps.geometry.poly.containsLocation(point, polyX);
+            }
+
+            function createPolygonLabel(feature, mapContext) {
+                var districtLabels = [
+                    [33.74204180139232, -112.16217041015625],  // 1
+                    [33.701492795584365, -112.01248168945312], // 2
+                    [33.61118827611696, -112.0550537109375],   // 3
+                    [33.500035382430724, -112.09968566894531], // 4
+                    [33.50547475685789, -112.19169616699219],  // 5
+                    [33.32765968968343, -112.03136444091797],  // 6
+                    [33.433446941997445, -112.17247009277344], // 7
+                    [33.415967956844625, -112.0217514038086]   // 8
+                ];
+                var districtId = parseInt((feature.getProperty('district_id'))) - 1;
+                var districtLabel = districtLabels[districtId];
+                var latLng = new google.maps.LatLng(districtLabel[0], districtLabel[1])
+
+                var mapLabel = new MapLabel({
+                    position: {lat: districtLabel[0], lng: districtLabel[1]},
+                    text: feature.getProperty('district_id'),
+                    map: mapContext,
+                    fontSize: 15,
+                    strokeWeight: 4
+                });
+                mapLabel.set('position', latLng);
+
+            }
+
+            function createSearchBox(map) {
+                // init address input
+                var input = document.getElementById('address-input');
+                var searchBox = new google.maps.places.SearchBox(input, {
+                    map: map,
+                    bounds: map.getBounds()
+                });
+                google.maps.event.addListenerOnce(map, 'idle', function(){
+                    map.fitBounds(map.getBounds());
+                });
+                map.addListener('bounds_changed', function() {
+                    searchBox.setBounds(map.getBounds());
+                  });
+
+                // update map when address picked
+                searchBox.addListener('places_changed', function() {
+                    var places = searchBox.getPlaces();
+
+                    if (Array.isArray(places) && places.length) {
+                        var location = places[0].geometry.location;
+                        var foundDistrict;
+
+                        // find if intersects
+                        map.data.forEach(function(districtFeature) {
+                            var featureGeom = districtFeature.getGeometry();
+
+                            if ('Polygon' === featureGeom.getType()) {
+                                var polygon = featureGeom.getAt(0).getArray();
+                                if (checkPolygonIntersection(location, polygon)) {
+                                    foundDistrict = districtFeature;
+                                }
+                            } else if ('MultiPolygon' === featureGeom.getType()) {
+                                var multiPolygon = featureGeom.getArray();
+                                multiPolygon.forEach(function(multiPolygon) {
+                                    var polygon = multiPolygon.getAt(0).getArray();
+                                    if (checkPolygonIntersection(location, polygon)) {
+                                        foundDistrict = districtFeature;
+                                    }
+                                });
+                            }
+                        });
+                        if (!foundDistrict) {
+                            onDistrictNotFound();
+                        } else {
+                            onDistrictFound();
+                        }
+                    }
+                });
+            }
+
+            function onDistrictNotFound() {
+                $('.alert-districtNotFound').css('display', 'block');
+            }
+
+            function onDistrictFound() {
+                $('.alert-districtNotFound').css('display', 'none');
+            }
+
+            function processPoints(geometry, callback, thisArg) {
+                if (geometry instanceof google.maps.LatLng) {
+                    callback.call(thisArg, geometry);
+                } else if (geometry instanceof google.maps.Data.Point) {
+                    callback.call(thisArg, geometry.get());
+                } else {
+                    geometry.getArray().forEach(function (g) {
+                        processPoints(g, callback, thisArg);
+                    });
+                }
+            }
+        </script>
+        <script src="/assets/vendor/bootstrap/jquery-3.1.0.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQZzoZhw1LP9ReCCe2YqMEtQ2-WjkM0qM&callback=initMap&libraries=places,geometry"></script>
+        <script src="/assets/vendor/google/maplabel.js"></script>
+    </body>
+</html>

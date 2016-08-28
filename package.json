@@ -1,0 +1,25 @@
+{
+  "name": "phoenix-arizona-districts",
+  "version": "0.0.0",
+  "description": "KML, Shapefile, et al: http://maps.phoenix.opendata.arcgis.com/datasets/8b2fdcd4a88b491ebb9cb51b9a59ba17_0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zschuessler/phoenix-arizona-districts.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/zschuessler/phoenix-arizona-districts/issues"
+  },
+  "dependencies": {
+    "gulp-changed": "~1.3.2",
+    "gulp-uglify": "~2.0.0",
+    "gulp-rename": "~1.2.2",
+    "vinyl-transform": "~1.0.0",
+    "browserify": "~13.1.0"
+  }
+}
