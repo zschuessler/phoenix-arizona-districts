@@ -1,6 +1,6 @@
 # Find Your Phoenix City Council District
 
-![screenshot(https://raw.githubusercontent.com/zschuessler/phoenix-arizona-districts/master/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/zschuessler/phoenix-arizona-districts/master/screenshot.png)
 
 This tool allows a user to view Phoenix city districts overlayed on a Google Map.
 Users may search by address or explore the districts themselves.
