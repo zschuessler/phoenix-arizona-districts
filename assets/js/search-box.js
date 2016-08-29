@@ -19,12 +19,16 @@ function SearchBox(config) {
     };
     this.SearchAutoComplete = null;
     this.Map = config.Map;
+    this.loaded = false;
 }
 
 SearchBox.prototype.init = function() {
-    google.maps.event.addListenerOnce(this.Map, 'bounds_changed', function(){
-        this.createAutocomplete()
-            .registerEvents();
+    google.maps.event.addListenerOnce(this.Map, 'bounds_changed', function() {
+        if (!this.loaded) {
+            this.createAutocomplete()
+                .registerEvents();
+            this.loaded = true;
+        }
     }.bind(this));
 };
 
