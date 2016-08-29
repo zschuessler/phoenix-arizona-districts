@@ -3,7 +3,7 @@ var SearchBox = require('./search-box');
 var InfoWindow = require('./info-window');
 
 function App() {
-    this.geojsonFilePath = '/assets/geometry/council-districts.json';
+    this.geojsonFilePath = '/phoenix-arizona-districts/assets/geometry/council-districts.json';
     this.Map = null;
     this.InfoWindow = null;
 
