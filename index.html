@@ -18,12 +18,21 @@
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col col-xs-7 col-sm-5 col-md-4 map-sidebar">
+                    <button type="button" class="close js-hideSidebar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     <h1 class="map-sidebar-hdg">Find Your Phoenix District</h1>
                     <p>Enter your address to find which city council district you're in.</p>
-                    <hr/>
                     <input id="address-input" type="text" class="form-control address-input" placeholder="Search By Address">
                     <div class="alert alert-warning alert-districtNotFound" role="alert">
                         That address doesn't match a Phoenix district.
+                    </div>
+                    <hr/>
+                    <div class="footnote">
+                        This project is open source.
+                        <a class="github-link" href="https://github.com/zschuessler/phoenix-arizona-districts">
+                            View on GitHub
+                        </a>
                     </div>
                 </div>
 

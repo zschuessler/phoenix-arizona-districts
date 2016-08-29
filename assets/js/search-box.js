@@ -14,7 +14,8 @@ function SearchBox(config) {
         $searchInput: $('.address-input'),
         $notFoundAlert: $('.alert-districtNotFound'),
         $toggleBtn: $('.map-sidebar-toggle'),
-        $modal: $('.app-modal-container')
+        $modal: $('.app-modal-container'),
+        $hideSidebarBtn: $('.js-hideSidebar')
     };
     this.SearchAutoComplete = null;
     this.Map = config.Map;
@@ -69,6 +70,10 @@ SearchBox.prototype.registerEvents = function() {
     // Toggle button
     this.dom.$toggleBtn.on('click', function() {
         this.show();
+    }.bind(this));
+
+    this.dom.$hideSidebarBtn.on('click', function() {
+        this.hide();
     }.bind(this));
 };
 

@@ -94,3 +94,30 @@ html, body {
 .modal-open .modal {
     display: block;
 }
+
+.app-modal-container .modal-header {
+    border: none;
+    padding: 15px 15px 0 0;
+}
+
+.app-modal-container h1 {
+    margin-top: 0;
+}
+
+.app-modal-container .modal-body {
+    padding: 0 15px 15px 15px;
+}
+
+.map-sidebar .close {
+    margin: 10px 0;
+    color: #4C0D0D;
+    border: 1px solid #B1B1B1;
+    padding: 0 5px;
+}
+
+.map-sidebar .footnote {
+    font-size: 11px;
+    color: #9C9C9C;
+    text-align: center;
+    font-style: italic;
+}
