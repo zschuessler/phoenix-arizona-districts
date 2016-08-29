@@ -14,6 +14,7 @@
     <body>
 
         <div class="container container-stretch">
+            <div class="app-modal-container"></div>
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col col-xs-7 col-sm-5 col-md-4 map-sidebar">
@@ -25,11 +26,21 @@
                         That address doesn't match a Phoenix district.
                     </div>
                 </div>
+
+                <!-- Sidebar Open/Close Icon -->
+                <div class="map-sidebar-toggle">
+                    <button type="button" class="btn btn-default" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        Search Address
+                    </button>
+                </div>
+
                 <!-- Google Map -->
                 <div id="map" class="col colxs-5 col-sm-7 col-md-8"></div>
             </div>
         </div>
         <script src="/assets/vendor/bootstrap/jquery-3.1.0.min.js"></script>
+        <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
         <script src="app.min.js"></script>
         <script>
             function initMap() {

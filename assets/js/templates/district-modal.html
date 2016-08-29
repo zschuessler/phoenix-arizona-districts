@@ -1,0 +1,41 @@
+<div class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">
+                    You Are In {{Name}}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <h2>Pop The Champagne</h2>
+                <p>
+                    You are in <strong>{{Name}}</strong>.
+                    Some say it's the finest district in the city.
+                </p>
+                <hr/><hr/>
+                <h4>Meet Your District Leader</h4>
+                <div class="media">
+                    <div class="media-left representative-img">
+                        <img class="media-object" src="{{representative_avatar}}">
+                    </div>
+                    <div class="media-body">
+                        <h5 class="media-heading">
+                            {{representative}}
+                        </h5>
+                        <hr/>
+                        <a href="{{district_url}}" class="btn btn-primary">
+                            Visit District {{district_id}} Homepage
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a class="btn btn-primary" href="{{district_url}}">Visit District Page</a>
+            </div>
+        </div>
+    </div>
+</div>

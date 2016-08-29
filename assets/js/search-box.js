@@ -1,4 +1,6 @@
 var $ = jQuery;
+var handlebars   = require('handlebars');
+var modalTemplate = require('raw!./templates/district-modal.html');
 
 function SearchBox(config) {
     config = config || {};
@@ -8,8 +10,11 @@ function SearchBox(config) {
     }
 
     this.dom = {
+        $wrapper: $('.map-sidebar'),
         $searchInput: $('.address-input'),
-        $notFoundAlert: $('.alert-districtNotFound')
+        $notFoundAlert: $('.alert-districtNotFound'),
+        $toggleBtn: $('.map-sidebar-toggle'),
+        $modal: $('.app-modal-container')
     };
     this.SearchAutoComplete = null;
     this.Map = config.Map;
@@ -46,18 +51,34 @@ SearchBox.prototype.registerEvents = function() {
     }.bind(this));
 
     // Autocomplete selection
-    this.SearchAutoComplete.addListener('places_changed', this.onPlacesChanged)
+    this.SearchAutoComplete.addListener('places_changed', function() {
+        this.onPlacesChanged();
+    }.bind(this));
 
     // Autocomplete: District found
-    $(document).on('district_found', function() {
-        this.dom.$notFoundAlert.css('display', 'block');
+    $(document).on('district_found', function(e,foundDistrict) {
+        this.dom.$notFoundAlert.css('display', 'none');
+        this.onDistrictFound(foundDistrict);
     }.bind(this));
 
     // Autocomplete: District not found
     $(document).on('district_notFound', function() {
-        this.dom.$notFoundAlert.css('display', 'none');
+        this.dom.$notFoundAlert.css('display', 'block');
     }.bind(this));
-}
+
+    // Toggle button
+    this.dom.$toggleBtn.on('click', function() {
+        this.show();
+    }.bind(this));
+};
+
+SearchBox.prototype.hide = function() {
+    this.dom.$wrapper.addClass('transition-hide');
+};
+
+SearchBox.prototype.show = function() {
+    this.dom.$wrapper.removeClass('transition-hide');
+};
 
 SearchBox.prototype.onPlacesChanged = function() {
     var places = this.SearchAutoComplete.getPlaces();
@@ -68,35 +89,44 @@ SearchBox.prototype.onPlacesChanged = function() {
     }
 
     var location = places[0].geometry.location;
+    var self = this;
     var foundDistrict;
 
     // find if intersects
     this.Map.data.forEach(function(districtFeature) {
-        console.log(this)
         var featureGeom = districtFeature.getGeometry();
 
         if ('Polygon' === featureGeom.getType()) {
             var polygon = featureGeom.getAt(0).getArray();
-            if (SearchBox.checkPolygonIntersection(location, polygon)) {
+            if (self.checkPolygonIntersection(location, polygon)) {
                 foundDistrict = districtFeature;
             }
         } else if ('MultiPolygon' === featureGeom.getType()) {
             var multiPolygon = featureGeom.getArray();
             multiPolygon.forEach(function(multiPolygon) {
                 var polygon = multiPolygon.getAt(0).getArray();
-                if (SearchBox.checkPolygonIntersection(location, polygon)) {
+                if (self.checkPolygonIntersection(location, polygon)) {
                     foundDistrict = districtFeature;
                 }
             });
         }
     });
 
-    if (!foundDistrict) {
-        $(document).trigger('district_found');
+    if (foundDistrict) {
+        $(document).trigger('district_found', [foundDistrict]);
     } else {
         $(document).trigger('district_notFound')
     }
+};
 
+SearchBox.prototype.onDistrictFound = function(foundDistrict) {
+    var template = handlebars.compile(modalTemplate);
+    var html = template(foundDistrict.f);
+
+    this.dom.$modal.html(html);
+    this.dom.$modal.modal({
+        show: true
+    });
 };
 
 SearchBox.prototype.checkPolygonIntersection = function(point, geometryPaths) {

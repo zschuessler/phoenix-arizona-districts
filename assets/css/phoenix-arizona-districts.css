@@ -1,8 +1,6 @@
 
 html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+
 }
 
 .container-stretch {
@@ -52,6 +50,29 @@ html, body {
     border-radius: 3px;
     box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, 0.2);
     padding-bottom: 20px;
+    opacity: 1;
+    visibility:visible;
+}
+
+.map-sidebar.transition-hide {
+    transition: 1s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+.map-sidebar-toggle {
+    z-index: 15;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    background:white;
+    width: 15px;
+    height: 15px;
+}
+
+.map-sidebar-toggle .glyphicon {
+    color: black;
 }
 
 .map-sidebar-hdg {
@@ -61,4 +82,15 @@ html, body {
 .alert-districtNotFound {
     display: none;
     margin: 19px 0 0 0;
+}
+
+.representative-img {
+    overflow: hidden;
+}
+.representative-img img {
+    width: 75px;
+}
+
+.modal-open .modal {
+    display: block;
 }

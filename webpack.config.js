@@ -17,5 +17,13 @@ module.exports = {
                 comments: false,
             },
         }),
-    ]
+    ],
+    node: {
+        fs: "empty"
+    },
+    resolve: {
+        alias: {
+            'handlebars': 'handlebars/dist/handlebars.js'
+        }
+    },
 }

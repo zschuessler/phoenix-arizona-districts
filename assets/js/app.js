@@ -1,5 +1,6 @@
 var $ = jQuery;
 var SearchBox = require('./search-box');
+var InfoWindow = require('./info-window');
 
 function App() {
     this.geojsonFilePath = '/assets/geometry/council-districts.json';
@@ -69,12 +70,14 @@ App.prototype.setProperty = function(key, value) {
 };
 
 App.prototype.onDistrictClicked = function(event) {
-    var popupHtml = event.feature.getProperty('representative');
-    
-    this.InfoWindow.setContent('<div style="width:150px; text-align: center;">' + popupHtml + '</div>');
+    var popupHtml = InfoWindow.getHtml(event.feature);
+
+    this.InfoWindow.setContent(popupHtml);
     this.InfoWindow.setPosition(event.latLng);
     this.InfoWindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
     this.InfoWindow.open(this.Map);
+
+    this.SearchBox.hide();
 }
 
 App.prototype.getGoogleMapConfig = function () {
