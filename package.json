@@ -20,6 +20,9 @@
     "gulp-uglify": "~2.0.0",
     "gulp-rename": "~1.2.2",
     "vinyl-transform": "~1.0.0",
-    "browserify": "~13.1.0"
+    "browserify": "~13.1.0",
+    "gulp": "~3.9.1",
+    "webpack-stream": "~3.2.0",
+    "webpack": "~1.13.2"
   }
 }

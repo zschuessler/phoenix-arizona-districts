@@ -16,7 +16,8 @@
                 "district_url": "https://phoenix.gov/district1",
                 "district_contact": "https://www.phoenix.gov/district1/contact-district-1",
                 "representative_avatar": "https://www.phoenix.gov/Media%20Assets/thelda-williams125.jpg",
-                "fill_color": "#6f97c4"
+                "fill_color": "#6f97c4",
+                "label_latlng": [33.74204180139232, -112.16217041015625]
             },
             "geometry": {
                 "type": "Polygon",
@@ -32,7 +33,8 @@
                 "district_url": "https://phoenix.gov/district2",
                 "district_contact": "https://www.phoenix.gov/district2/contact-district-2",
                 "representative_avatar": "https://www.phoenix.gov/Media%20Assets/waring-jim125.jpg",
-                "fill_color": "#be4b34"
+                "fill_color": "#be4b34",
+                "label_latlng": [33.701492795584365, -112.01248168945312]
             },
             "geometry": {
                 "type": "MultiPolygon",
@@ -48,7 +50,8 @@
                 "district_url": "https://phoenix.gov/district3",
                 "district_contact": "https://www.phoenix.gov/district3/contact-district-3",
                 "representative_avatar": "https://www.phoenix.gov/Media%20Assets/Debra%20Stark%20D3%202016%200615%20200x300.jpg",
-                "fill_color": "#6f4ac6"
+                "fill_color": "#6f4ac6",
+                "label_latlng": [33.61118827611696, -112.0550537109375]
             },
             "geometry": {
                 "type": "Polygon",
@@ -64,7 +67,8 @@
                 "district_url": "https://phoenix.gov/district4",
                 "district_contact": "https://www.phoenix.gov/district4/contact-district-4",
                 "representative_avatar": "https://www.phoenix.gov/Media%20Assets/laura-pastor125.jpg",
-                "fill_color": "#6ab25d"
+                "fill_color": "#6ab25d",
+                "label_latlng": [33.500035382430724, -112.09968566894531]
             },
             "geometry": {
                 "type": "Polygon",
@@ -80,7 +84,8 @@
                 "district_url": "https://phoenix.gov/district5",
                 "district_contact": "https://www.phoenix.gov/district5/contact-district-5",
                 "representative_avatar": "https://www.phoenix.gov/Media%20Assets/danny-valenzuela125.jpg",
-                "fill_color": "#cd53bf"
+                "fill_color": "#cd53bf",
+                "label_latlng": [33.50547475685789, -112.19169616699219]
             },
             "geometry": {
                 "type": "Polygon",
@@ -96,7 +101,8 @@
                 "district_url": "https://phoenix.gov/district6",
                 "district_contact": "https://www.phoenix.gov/district6/contact-district-6",
                 "representative_avatar": "https://www.phoenix.gov/itssite/MediaAssets/030816.jpg",
-                "fill_color": "#c39b4b"
+                "fill_color": "#c39b4b",
+                "label_latlng": [33.32765968968343, -112.03136444091797]
             },
             "geometry": {
                 "type": "MultiPolygon",
@@ -112,7 +118,8 @@
                 "district_url": "https://phoenix.gov/district7",
                 "district_contact": "https://www.phoenix.gov/district7/contact-district-7",
                 "representative_avatar": "https://www.phoenix.gov/Media%20Assets/michael-nowakowski125.jpg",
-                "fill_color": "#623b6f"
+                "fill_color": "#623b6f",
+                "label_latlng": [33.433446941997445, -112.17247009277344]
             },
             "geometry": {
                 "type": "MultiPolygon",
@@ -128,7 +135,8 @@
                 "district_url": "https://phoenix.gov/district8",
                 "district_contact": "https://www.phoenix.gov/district8/contact-district-8",
                 "representative_avatar": "https://www.phoenix.gov/Media%20Assets/kate-gallego125.jpg",
-                "fill_color": "#576338"
+                "fill_color": "#576338",
+                "label_latlng": [33.415967956844625, -112.0217514038086]
             },
             "geometry": {
                 "type": "Polygon",
