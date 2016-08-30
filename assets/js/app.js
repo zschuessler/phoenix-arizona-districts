@@ -109,4 +109,4 @@ App.prototype.getGoogleMapConfig = function () {
     };
 };
 
-module.exports = new App;
+module.exports = App;

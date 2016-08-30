@@ -53,6 +53,7 @@
         <script src="app.min.js"></script>
         <script>
             function initMap() {
+                window.App = new App()
                 var map = new google.maps.Map(
                     document.getElementById('map'),
                     App.getGoogleMapConfig()
