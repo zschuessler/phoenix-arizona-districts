@@ -23,13 +23,8 @@ function SearchBox(config) {
 }
 
 SearchBox.prototype.init = function() {
-    google.maps.event.addListenerOnce(this.Map, 'bounds_changed', function() {
-        if (!this.loaded) {
-            this.createAutocomplete()
-                .registerEvents();
-            this.loaded = true;
-        }
-    }.bind(this));
+    this.createAutocomplete()
+        .registerEvents();
 };
 
 SearchBox.prototype.createAutocomplete = function() {
@@ -46,12 +41,12 @@ SearchBox.prototype.createAutocomplete = function() {
 
 SearchBox.prototype.registerEvents = function() {
     // Map idle
-    google.maps.event.addListenerOnce(this.Map, 'idle', function(){
+    google.maps.event.addListenerOnce(this.Map, 'idle', function() {
         this.Map.fitBounds(this.Map.getBounds());
     }.bind(this));
 
     // Map bounds changed
-    this.Map.addListener('bounds_changed', function() {
+    google.maps.event.addListener(this.Map, 'bounds_changed', function() {
         this.SearchAutoComplete.setBounds(this.Map.getBounds());
     }.bind(this));
 
