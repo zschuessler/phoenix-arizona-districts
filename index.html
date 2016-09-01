@@ -53,18 +53,20 @@
         <script src="app.min.js"></script>
         <script>
             function initMap() {
-                window.App = new App()
-                var map = new google.maps.Map(
-                    document.getElementById('map'),
-                    App.getGoogleMapConfig()
-                );
+                jQuery(document).ready(function() {
+                    window.App = new App()
+                    var map = new google.maps.Map(
+                        document.getElementById('map'),
+                        App.getGoogleMapConfig()
+                    );
 
-                App.setProperty('InfoWindow', new google.maps.InfoWindow())
-                    .setProperty('Map', map)
-                    .loadGeoJson();
+                    App.setProperty('InfoWindow', new google.maps.InfoWindow())
+                        .setProperty('Map', map)
+                        .loadGeoJson();
 
-                App.Map.data.addListener('click', function(event) {
-                    App.onDistrictClicked.call(App, event)
+                    App.Map.data.addListener('click', function(event) {
+                        App.onDistrictClicked.call(App, event)
+                    });
                 });
             }
         </script>
